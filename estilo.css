@@ -1,0 +1,33 @@
+h1 {
+    color:black;
+    text-align: center;
+    border: double brown 5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 50px;
+}
+
+h6 {
+    text-align: center;
+}
+
+footer {
+    background-color: brown;
+    color: white;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    background-color:#e0e094;
+}
+
+div{
+    display: block;
+}
+
+canvas {
+    display: flex;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    /*text-align: center;*/
+}

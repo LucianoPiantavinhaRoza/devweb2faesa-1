@@ -1,65 +1,61 @@
 const fs = require('fs');
 
 var textoBiblia;
-var textoSemNumeros;
 var textoSemPontuacao;
 var textoPuro;
-var textoLimpo;
-var textoPronto;
+var textoSeparado;
+var quantidadePalavras;
 var objetoPalavras = {};
 
 fs.readFile('bible.txt', 'utf-8', (err, data) => {
-    textoBiblia = data;
+    textoBiblia = data.toLowerCase();
     //Removendo número
-    var sn = /[0-9]/g;
+    //var sn = /[0-9]/g;
     //Removendo pontuação
-    var sp = /[.:!?,;''()]/g;
-    //Removendo espaços em branco
+    //var sp = /[.:!?,;''()]/g;
+    //Regex pra tirar caracteres
+    var sc = /[^a-zA-Z ]+/g
+    //Regex pra tirar espaços no meio de cada elemento do vetor
     var ss = /r\n|\n|\r/g;
     //Selecionando palavras com 3 letras
     var sl = /w*\b\w{1,2}\b/g;
-    textoSemNumeros = textoBiblia.replace(sn, ' ');
-    textoSemPontuacao = textoSemNumeros.replace(sp, ' ');
+    //Aplicando os regex
+    textoSemPontuacao = textoBiblia.replace(sc, ' ');
     textoPuro = textoSemPontuacao.replace(ss, ' ');
-    textoLimpo = textoPuro.replace(sl, ' ');
-    textoPronto = textoLimpo.split(' ');
-    //console.log(textoPronto);
-    //Pegar todas as palavras e o número de ocorrencias
-    var quantidadePalavras = textoPronto.reduce(function(todasPalavras, palavra) {
-        if(palavra in todasPalavras) {
+    textoTresPalavras = textoPuro.replace(sl, ' ');
+    textoSeparado = textoTresPalavras.split(' ');
+    //Filtrar apenas os elementos existentes no vetor(tirar elementos em branco)
+    textoSemCampos = textoSeparado.filter(x => x);
+    //Retorna todas as palavras da bíblia com o número de vezes que cada uma delas aparece
+    quantidadePalavras = textoSemCampos.reduce(function (todasPalavras, palavra) { 
+        if (palavra in todasPalavras) {
             todasPalavras[palavra]++;
-        } else {
+        }
+        else {
             todasPalavras[palavra] = 1;
         }
         return todasPalavras;
     }, {});
+    //Separando todas as keys em outra variavel
+    vetorChavesSeperadas = Object.keys(quantidadePalavras);
+    //Ordenando os valores de todas as keys
+    todosValoresOrdenado = vetorChavesSeperadas.sort((a, b) => quantidadePalavras[b] - quantidadePalavras[a]).map(key => objetoPalavras[key] = quantidadePalavras[key]);
+    //Separando todas as palavras em outra variavel
+    vetorTopdez = Object.keys(objetoPalavras);
+    //Separando as 10 palavras mais recorrentes e seus respectivos valores
+    topDez = vetorTopdez.slice(0, 10).map(key => ({[key]:objetoPalavras[key]}));
+    //Separando Apenas as 10 palavras
+    var dezPalavras = topDez.map(x => Object.getOwnPropertyNames(x));
+    //Separando apenas as 10 ocorrencias
+    var dezOcorrencias = topDez.map(x => Object.values(x));
     
-    var aux = Object.keys(quantidadePalavras).sort((a, b) => {
-        quantidadePalavras[b] - quantidadePalavras[a]
-    }).map(key => {
-        objetoPalavras[key] = quantidadePalavras[key]
-    });
-    
-    //Pegar as 10 palavras e quantas vezes elas se repetem
-    var topDez = Object.keys(objetoPalavras).slice(0,10).map(key => {
-        ({[key]:objetoPalavras[key]})
-    });
-
-    //Vetor das 10 palavras
-    var vetorPalavras = topDez.map(x => {
-        Object.getOwnPropertyNames(x)
-    }).flat();
-
-    //Vetor ocorrencias das 10 palavras
-    var vetorOcorrencias = topDez.map(x => {
-        Object.values(x)
-    }).flat();
-
     console.log(quantidadePalavras);
-    console.log(aux)
+    console.log(todosValoresOrdenado)
     console.log(topDez);
-    console.log(vetorOcorrencias);
-    console.log(vetorPalavras);
+    console.log(dezPalavras);
+    console.log(dezOcorrencias);
+
+    module.exports = { dezPalavras, dezOcorrencias }
 })
 
 /*
