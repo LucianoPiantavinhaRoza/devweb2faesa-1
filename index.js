@@ -9,10 +9,6 @@ var objetoPalavras = {};
 
 fs.readFile('bible.txt', 'utf-8', (err, data) => {
     textoBiblia = data.toLowerCase();
-    //Removendo número
-    //var sn = /[0-9]/g;
-    //Removendo pontuação
-    //var sp = /[.:!?,;''()]/g;
     //Regex pra tirar caracteres
     var sc = /[^a-zA-Z ]+/g
     //Regex pra tirar espaços no meio de cada elemento do vetor
@@ -49,25 +45,11 @@ fs.readFile('bible.txt', 'utf-8', (err, data) => {
     //Separando apenas as 10 ocorrencias
     var dezOcorrencias = topDez.map(x => Object.values(x));
     
-    console.log(quantidadePalavras);
-    console.log(todosValoresOrdenado)
-    console.log(topDez);
+    //console.log(quantidadePalavras);
+    //console.log(todosValoresOrdenado)
+    //console.log(topDez);
     console.log(dezPalavras);
     console.log(dezOcorrencias);
 
     module.exports = { dezPalavras, dezOcorrencias }
 })
-
-/*
-var texto;
-
-fs.readFile('bible.txt', function read(err, data) {
-    if (err) {
-        throw err;
-    }
-    texto = data;
-    console.log(texto);
-});
-*/
-
-//https://github.com/raphaelmb/webdev2-I//

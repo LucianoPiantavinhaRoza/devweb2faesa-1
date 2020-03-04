@@ -4,10 +4,14 @@ const { dezPalavras, dezOcorrencias } = require('./index')
 //importanto o express
 const express = require('express')
 const server = express();
-//Rota para vetor de palavras
-server.get('/', (request, response) => {
-    response.render('/index.js');
-})
+
+server.use(express.static(__dirname + '/views'));
+server.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", '*'); 
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
+
 //Rota para vetor de palavras
 server.get('/dezPalavras', (request, response) => {
     response.send(dezPalavras);
@@ -19,12 +23,6 @@ server.get('/dezOcorrencias', (request, response) => {
 
 const hostname = '127.0.0.1';
 const port = 3000;
-
-server.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", '*'); 
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
 
 server.listen(port, hostname, () => {
     console.log(`SERVIDOR RODANDO EM http://${hostname}:${port}/`);
