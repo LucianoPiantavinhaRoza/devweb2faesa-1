@@ -1,5 +1,5 @@
 //Importanto os vetores de dados do index,js
-const { dezPalavras, dezOcorrencias } = require('./index')
+const final = require('./index');
 //const http = require('http');
 //importanto o express
 const express = require('express')
@@ -14,11 +14,11 @@ server.use(function(req, res, next) {
 
 //Rota para vetor de palavras
 server.get('/dezPalavras', (request, response) => {
-    response.send(dezPalavras);
+    response.send(final[0]);
 })
 //Rota para vetor de ocorrencias
 server.get('/dezOcorrencias', (request, response) => {
-    response.send(dezOcorrencias);
+    response.send(final[1]);
 })
 
 const hostname = '127.0.0.1';

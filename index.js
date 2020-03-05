@@ -6,6 +6,7 @@ var textoPuro;
 var textoSeparado;
 var quantidadePalavras;
 var objetoPalavras = {};
+var final = [];
 
 fs.readFile('bible.txt', 'utf-8', (err, data) => {
     textoBiblia = data.toLowerCase();
@@ -41,15 +42,17 @@ fs.readFile('bible.txt', 'utf-8', (err, data) => {
     //Separando as 10 palavras mais recorrentes e seus respectivos valores
     topDez = vetorTopdez.slice(0, 10).map(key => ({[key]:objetoPalavras[key]}));
     //Separando Apenas as 10 palavras
-    var dezPalavras = topDez.map(x => Object.getOwnPropertyNames(x));
+    var dezPalavras = topDez.map(x => Object.getOwnPropertyNames(x)).flat();
     //Separando apenas as 10 ocorrencias
-    var dezOcorrencias = topDez.map(x => Object.values(x));
+    var dezOcorrencias = topDez.map(x => Object.values(x)).flat();
     
     //console.log(quantidadePalavras);
     //console.log(todosValoresOrdenado)
     //console.log(topDez);
     console.log(dezPalavras);
     console.log(dezOcorrencias);
+    final.push(dezPalavras, dezOcorrencias)
+    return final;
 
-    module.exports = { dezPalavras, dezOcorrencias }
+    module.exports = final;
 })
