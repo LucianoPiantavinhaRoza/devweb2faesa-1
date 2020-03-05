@@ -53,6 +53,5 @@ fs.readFile('bible.txt', 'utf-8', (err, data) => {
     console.log(dezOcorrencias);
     final.push(dezPalavras, dezOcorrencias)
     return final;
-
-    module.exports = final;
 })
+module.exports = final;
