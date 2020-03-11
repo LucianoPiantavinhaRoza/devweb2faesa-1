@@ -6,4 +6,4 @@ Esta aplicação mostra as 10 palavras mais recorrentes na bíblia sagrada em um
 Para rodar a aplicação: 
 
 - node servidor.js
-- acesar o link gerado no pelo servidor.
+- acessar o link gerado no pelo servidor.
